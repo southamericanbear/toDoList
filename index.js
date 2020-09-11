@@ -51,3 +51,5 @@ search.addEventListener("keyup", () => {
   const term = search.value.trim().toLowerCase();
   filterTodos(term);
 });
+
+console.log(JSON.stringify({ x: 5, y: 6 }));
