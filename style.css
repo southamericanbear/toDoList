@@ -4,7 +4,19 @@ body {
 .container {
   max-width: 400px;
 }
-
+img {
+  width: 369px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+h1 {
+  font-size: 1.5rem;
+  text-align: start;
+  top: -35px;
+  position: relative;
+  margin-left: 10px;
+  margin-bottom: 0px;
+}
 input[type="text"],
 input[type="text"]:focus {
   color: #fff;
