@@ -9,14 +9,7 @@ img {
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
 }
-h1 {
-  font-size: 1.5rem;
-  text-align: start;
-  top: -35px;
-  position: relative;
-  margin-left: 10px;
-  margin-bottom: 0px;
-}
+
 input[type="text"],
 input[type="text"]:focus {
   color: #fff;
@@ -33,4 +26,34 @@ input[type="text"]:focus {
 }
 .filtered {
   display: none !important;
+}
+
+h1 {
+  font-size: 1.2rem;
+  text-align: start;
+  top: -30px;
+  position: relative;
+  margin-left: 10px;
+  margin-bottom: 0px;
+}
+.weather-container {
+  max-width: 200px;
+  top: -65px;
+  left: 160px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+h3 {
+  font-size: 0.9rem;
+  margin-left: 10px;
+  margin-bottom: 0px;
+}
+
+.weather {
+  font-size: 0.9rem;
+  margin-left: 10px;
+  margin-bottom: 0px;
 }

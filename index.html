@@ -1,49 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>toDoList</title>
-    <script
-      src="https://kit.fontawesome.com/fa5117c01c.js"
-      crossorigin="anonymous"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
 
-  <body>
-    <div class="container">
-      <header class="text-center text-light my-4">
-        <div class="date-and-climate-container">
-          <img
-            src="https://github.com/CodeExplainedRepo/To-Do-List/blob/master/img/bg.jpg?raw=true"
-            alt=""
-          />
-        </div>
-        <h1 class="text-ligth mb.4"></h1>
-        <form action="" class="search">
-          <input
-            type="text"
-            class="form-control m-auto"
-            name="search"
-            placeholder="Search toDo's"
-          />
-        </form>
-      </header>
-      <ul class="list-group todos mx-auto text-light"></ul>
-      <form class="add text-center my-4">
-        <label class="text-light">Add new toDo...</label>
-        <input type="text" class="form-control m-auto" name="add" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>toDoList</title>
+  <script src="https://kit.fontawesome.com/fa5117c01c.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <header class="text-center text-light my-4">
+      <img src="https://github.com/CodeExplainedRepo/To-Do-List/blob/master/img/bg.jpg?raw=true" alt="" />
+      <h1 class="text-ligth mb.4"></h1>
+      <div class="injectWeather weather-container">
+        <h3 class="nameOfCity"></h3><span class="weather"></span>
+      </div>
+      <form action="" class="search">
+        <input type="text" class="form-control m-auto" name="search" placeholder="Search toDo's" />
       </form>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.min.js"></script>
-    <script src="scripts/todos-function.js"></script>
-    <script src="scripts/date-and-weather.js"></script>
-  </body>
+    </header>
+    <ul class="list-group todos mx-auto text-light"></ul>
+    <form class="add text-center my-4">
+      <label class="text-light">Add new toDo...</label>
+      <input type="text" class="form-control m-auto" name="add" />
+    </form>
+    <form class="gettheweather text-center my-4">
+      <label class="get-the-weather text-light"></label>
+      <input type="text" class="form-control m-auto" name="gettheweather"
+        placeholder="Upload your city to get the weather..." />
+    </form>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.min.js"></script>
+  <script src="scripts/todos-function.js"></script>
+  <script src="scripts/date-and-weather.js"></script>
+</body>
+
 </html>

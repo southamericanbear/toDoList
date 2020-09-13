@@ -1,9 +1,9 @@
 const addForm = document.querySelector(".add");
 const list = document.querySelector(".todos");
 const search = document.querySelector(".search input");
-var todos = [];
-var todosString = localStorage.getItem("todos");
-var todos = JSON.parse(todosString);
+// var todos = [];
+// var todosString = localStorage.getItem("todos");
+// var todos = JSON.parse(todosString);
 
 // generate new toDo's
 const generateTemplate = (todos) => {
@@ -13,15 +13,15 @@ const generateTemplate = (todos) => {
   list.innerHTML += html;
 };
 
-todos.forEach((todo) => generateTemplate(todo));
+// todos.forEach((todo) => generateTemplate(todo));
 
 // submit the todo
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
   let todo = addForm.add.value.trim();
   if (todo.length) {
-    todos.push(todo);
-    localStorage.setItem("todos", JSON.stringify(todos));
+    // todos.push(todo);
+    // localStorage.setItem("todos", JSON.stringify(todos));
     generateTemplate(todo);
     addForm.reset();
   }
