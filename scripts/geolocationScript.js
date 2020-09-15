@@ -31,5 +31,3 @@ const getWeather = () => {
 };
 
 getWeather();
-
-asfsafasfasfasfasfasf;
