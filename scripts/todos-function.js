@@ -98,8 +98,6 @@ list.addEventListener("click", function (event) {
   localStorage.setItem("TODO", JSON.stringify(listTodo));
 });
 
-// filter the toDo's
-
 const filterTodos = (term) => {
   Array.from(list.children)
     .filter((todo) => !todo.textContent.toLowerCase().includes(term))
