@@ -23,16 +23,18 @@ const deleteTodo = (id) => {
 };
 
 // get the info in the page
-db.collection("Todos").onSnapshot((snapshot) => {
-  snapshot.docChanges().forEach((change) => {
-    const doc = change.doc;
-    if (change.type === "added") {
-      generateTemplate(doc.data(), doc.id);
-    } else if (change.type === "removed") {
-      deleteTodo(doc.id);
-    }
+db.collection("Todos")
+  .orderBy("created_at")
+  .onSnapshot((snapshot) => {
+    snapshot.docChanges().forEach((change) => {
+      const doc = change.doc;
+      if (change.type === "added") {
+        generateTemplate(doc.data(), doc.id);
+      } else if (change.type === "removed") {
+        deleteTodo(doc.id);
+      }
+    });
   });
-});
 
 // submit the todo
 addForm.addEventListener("submit", (e) => {
