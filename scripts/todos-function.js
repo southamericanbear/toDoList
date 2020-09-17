@@ -1,40 +1,73 @@
 const addForm = document.querySelector(".add");
 const list = document.querySelector(".todos");
 const search = document.querySelector(".search input");
-// var todos = [];
-// var todosString = localStorage.getItem("todos");
-// var todos = JSON.parse(todosString);
 
 // generate new toDo's
-const generateTemplate = (todos) => {
-  let html = ` <li class="list-group-item d-flex justify-content-between align-items-center">
-    <span>${todos}</span><i class="far fa-trash-alt delete"></i>
+const generateTemplate = (toDo, id) => {
+  let html = ` <li data-id=${id} class="list-group-item d-flex justify-content-between align-items-center">
+    <span>${toDo.title}</span><i class="far fa-trash-alt delete"></i>
   </li>`;
   list.innerHTML += html;
 };
 
-// todos.forEach((todo) => generateTemplate(todo));
+const deleteTodo = (id) => {
+  const todos = document.querySelectorAll("li");
+  todos.forEach((toDo) => {
+    if (toDo.getAttribute("data-id") === id) {
+      toDo.remove();
+    }
+  });
+};
+
+// get the info in the page
+db.collection("Todos").onSnapshot((snapshot) => {
+  snapshot.docChanges().forEach((change) => {
+    const doc = change.doc;
+    if (change.type === "added") {
+      generateTemplate(doc.data(), doc.id);
+    } else if (change.type === "removed") {
+      deleteTodo(doc.id);
+    }
+  });
+});
 
 // submit the todo
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  let todo = addForm.add.value.trim();
-  if (todo.length) {
-    // todos.push(todo);
-    // localStorage.setItem("todos", JSON.stringify(todos));
-    generateTemplate(todo);
-    addForm.reset();
-  }
+
+  const now = new Date();
+
+  const toDo = {
+    title: addForm.add.value.trim(),
+    created_at: firebase.firestore.Timestamp.fromDate(now),
+  };
+  db.collection("Todos")
+    .add(toDo)
+    .then(() => {
+      console.log("todo added");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  addForm.reset();
 });
 
 // delete todo's
 
 list.addEventListener("click", (e) => {
   if (e.target.classList.contains("delete")) {
-    e.target.parentElement.remove();
+    const id = e.target.parentElement.getAttribute("data-id");
+    db.collection("Todos")
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("Todo Deleted");
+      });
   }
 });
 
+// search todo's
 const filterTodos = (term) => {
   Array.from(list.children)
     .filter((todo) => !todo.textContent.toLowerCase().includes(term))
@@ -49,3 +82,9 @@ search.addEventListener("keyup", () => {
   const term = search.value.trim().toLowerCase();
   filterTodos(term);
 });
+
+db.collection("Todos")
+  .get()
+  .then((snapshot) => {
+    snapshot.docs.forEach((doc) => console.log(doc.data()));
+  });
