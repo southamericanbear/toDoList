@@ -6,3 +6,5 @@ const daOfTheWeek = new Intl.DateTimeFormat("en", { weekday: "long" }).format(
   now
 );
 today.innerHTML = `${daOfTheWeek} ${da} ${mo}.`;
+
+console.log(now);

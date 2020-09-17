@@ -1,65 +1,76 @@
 const addForm = document.querySelector(".add");
 const list = document.querySelector(".todos");
 const search = document.querySelector(".search input");
-let listTodo, id;
 
-let data = localStorage.getItem("TODO");
-if (data) {
-  listTodo = JSON.parse(data);
-  id = listTodo.length;
-  loadList(listTodo);
-} else {
-  listTodo = [];
-  id = 0;
-}
-
-function loadList(array) {
-  array.forEach(function (item) {
-    addTodo(item.name, item.id, item.trash);
-  });
-}
-
-function addTodo(todo, id, trash) {
-  if (trash) {
-    return;
-  }
-
-  let html = ` <li class="list-group-item d-flex justify-content-between align-items-center"><span>${todo}</span><i class="far fa-trash-alt delete" job="delete" id=${id}></i></li>`;
+// generate new toDo's
+const generateTemplate = (toDo, id) => {
+  let html = ` <li data-id=${id} class="list-group-item d-flex justify-content-between align-items-center">
+    <span>${toDo.title}</span><i class="far fa-trash-alt delete"></i>
+  </li>`;
 
   const position = "beforeend";
-  list.insertAdjacentHTML(position, html);
-}
 
+  list.insertAdjacentHTML(position, html);
+};
+
+const deleteTodo = (id) => {
+  const todos = document.querySelectorAll("li");
+  todos.forEach((toDo) => {
+    if (toDo.getAttribute("data-id") === id) {
+      toDo.remove();
+    }
+  });
+};
+
+// get the info in the page
+db.collection("Todos").onSnapshot((snapshot) => {
+  snapshot.docChanges().forEach((change) => {
+    const doc = change.doc;
+    if (change.type === "added") {
+      generateTemplate(doc.data(), doc.id);
+    } else if (change.type === "removed") {
+      deleteTodo(doc.id);
+    }
+  });
+});
+
+// submit the todo
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const todo = addForm.add.value.trim();
-  if (todo.length) {
-    addTodo(todo, id, false);
-    listTodo.push({
-      name: todo,
-      id: id,
-      trash: false,
+
+  const now = new Date();
+
+  const toDo = {
+    title: addForm.add.value.trim(),
+    created_at: firebase.firestore.Timestamp.fromDate(now),
+  };
+  db.collection("Todos")
+    .add(toDo)
+    .then(() => {
+      console.log("todo added");
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  }
-  localStorage.setItem("TODO", JSON.stringify(listTodo));
-  id++;
+
   addForm.reset();
 });
 
-function removeTodo(element) {
-  element.parentNode.parentNode.removeChild(element.parentNode);
-  listTodo[element.id].trash = true;
-}
+// delete todo's
 
-list.addEventListener("click", function (event) {
-  const element = event.target;
-  const elementJOB = element.attributes.job.value;
-  if (elementJOB == "delete") {
-    removeTodo(element);
+list.addEventListener("click", (e) => {
+  if (e.target.classList.contains("delete")) {
+    const id = e.target.parentElement.getAttribute("data-id");
+    db.collection("Todos")
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("Todo Deleted");
+      });
   }
-  localStorage.setItem("TODO", JSON.stringify(listTodo));
 });
 
+// search todo's
 const filterTodos = (term) => {
   Array.from(list.children)
     .filter((todo) => !todo.textContent.toLowerCase().includes(term))
@@ -74,3 +85,9 @@ search.addEventListener("keyup", () => {
   const term = search.value.trim().toLowerCase();
   filterTodos(term);
 });
+
+db.collection("Todos")
+  .get()
+  .then((snapshot) => {
+    snapshot.docs.forEach((doc) => console.log(doc.data()));
+  });
