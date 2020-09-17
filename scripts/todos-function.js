@@ -7,7 +7,10 @@ const generateTemplate = (toDo, id) => {
   let html = ` <li data-id=${id} class="list-group-item d-flex justify-content-between align-items-center">
     <span>${toDo.title}</span><i class="far fa-trash-alt delete"></i>
   </li>`;
-  list.innerHTML += html;
+
+  const position = "beforeend";
+
+  list.insertAdjacentHTML(position, html);
 };
 
 const deleteTodo = (id) => {
