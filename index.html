@@ -57,6 +57,7 @@
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
     const db = firebase.firestore();
+    const signInwithGoogle = new firebase.auth.GoogleAuthProvider();
   </script>
 
   <!-- firebase scripts -->
